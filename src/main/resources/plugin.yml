@@ -1,0 +1,4 @@
+name: Postcards
+version: '1.0'
+main: net.civicraft.postcards.Postcards
+api-version: '1.21'
