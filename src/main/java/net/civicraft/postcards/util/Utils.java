@@ -1,4 +1,8 @@
-package net.civicraft.postcards;
+package net.civicraft.postcards.util;
+
+import net.civicraft.postcards.Postcards;
+import net.civicraft.postcards.object.PostCard;
+import org.bukkit.inventory.Inventory;
 
 import java.util.List;
 

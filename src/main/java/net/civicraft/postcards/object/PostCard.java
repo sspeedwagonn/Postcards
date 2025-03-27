@@ -1,4 +1,4 @@
-package net.civicraft.postcards;
+package net.civicraft.postcards.object;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -16,12 +16,24 @@ public class PostCard {
     private Player sender;
     private String content;
     private ItemStack item;
+
+    private List<Component> lore = new ArrayList<>();
 //add date signed
     // Creating a postcard
     public PostCard() {
         this.sender = null;
         this.content = null;
         item = new ItemStack(Material.PAPER);
+        applyMeta(item);
+    }
+
+    private void applyMeta(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(Component.text("Postcard"));
+        lore.add(Component.text("Unwritten"));
+        lore.add(Component.text("Use \"/postcard\" write to add a message!"));
+        meta.lore(lore);
+        item.setItemMeta(meta);
     }
 
     //aka "signing" or "sending" -- named this because it will occur when written (no taksies-backsies)
@@ -34,13 +46,13 @@ public class PostCard {
     private void signedMeta(PostCard postCard) {
         ItemStack item = postCard.getItem();
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(Component.text("Postcard", NamedTextColor.AQUA));
-        List<Component> lore = new ArrayList<>();
+        lore.clear();
         lore.add(Component.text("Sent by " + sender.getName(), NamedTextColor.GRAY));
         lore.add(Component.text("Written on ", NamedTextColor.DARK_GRAY));
         meta.lore(lore);
         meta.addEnchant(Enchantment.LUCK_OF_THE_SEA, 1, true);
         meta.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(meta);
     }
 
     //getters -- remove ones not in use by v3
